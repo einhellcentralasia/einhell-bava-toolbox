@@ -1,5 +1,4 @@
 :root{
-  /* unified dark, Apple-ish */
   --bg:#1b1e23;
   --card:#262a30;
   --text:#ececef;
@@ -68,8 +67,8 @@ html, body {
 }
 .card{
   position:relative;
-  width:280px;            /* fixed width */
-  min-height:170px;       /* equal-ish height */
+  width:280px;
+  min-height:170px;
   background:var(--card);
   border:1px solid var(--border);
   border-radius:var(--radius);
@@ -99,14 +98,22 @@ html, body {
 .access-public{ /* ✅ */ }
 .access-internal{ /* 🚫 */ }
 
-/* Lock screen */
+/* 🔒 Lock screen (on top, nothing visible behind because app is hidden) */
 .lock-screen{
-  position:fixed; inset:0; display:grid; place-items:center; background:var(--bg);
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  z-index: 9999;
+  background: #0f1216;                  /* solid backdrop */
 }
 .lock-card{
-  width:min(420px,90vw);
-  background:#21262d; border:1px solid var(--border); border-radius:16px;
-  padding:22px; box-shadow:var(--shadow);
+  width:min(520px,92vw);
+  background:#21262d;
+  border:1px solid var(--border);
+  border-radius:16px;
+  padding:26px;
+  box-shadow:var(--shadow);
 }
 .lock-card .muted{color:var(--muted)}
 #lock-form{display:flex; gap:10px; margin-top:12px}
