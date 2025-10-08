@@ -18,36 +18,26 @@
       copy: "Копировать ссылку",
       copied: "Скопировано!",
       searchPH: "Поиск…",
-      hint: "Нажми ⌘/Ctrl+K для поиска • Shift+A — добавить приложение (подсказка)",
-      modalTitle: "Как добавить новое приложение",
-      modalText1: "Открой файл ",
-      modalText2: "Пример объекта (скопируй и отредактируй):",
-      modalText3: "После коммита Cloudflare Pages автоматически обновит сайт.",
-      copyJson: "Скопировать пример",
+      hint: "Нажми ⌘/Ctrl+K для поиска",
       lockTitle: "Доступ",
       lockInfo: "Введите пароль, чтобы открыть приложение.",
       unlock: "Открыть",
       wrongPass: "Неверный пароль.",
       openLink: "Открыть",
-      logoutTitle: "Сессия сброшена.",
+      logoutTitle: "Сессия сброшена."
     },
     [EN]: {
       open: "Open",
       copy: "Copy link",
       copied: "Copied!",
       searchPH: "Search…",
-      hint: "Press ⌘/Ctrl+K to search • Shift+A to add app (helper)",
-      modalTitle: "How to add a new app",
-      modalText1: "Open ",
-      modalText2: "Example object (copy & edit):",
-      modalText3: "After commit, Cloudflare Pages will auto-update the site.",
-      copyJson: "Copy example",
+      hint: "Press ⌘/Ctrl+K to search",
       lockTitle: "Access",
       lockInfo: "Enter password to unlock.",
       unlock: "Unlock",
       wrongPass: "Wrong password.",
       openLink: "Open",
-      logoutTitle: "Session cleared.",
+      logoutTitle: "Session cleared."
     }
   };
 
@@ -62,11 +52,6 @@
   const lockBtn = document.getElementById("lock-btn");
   const searchInput = document.getElementById("search");
   const content = document.getElementById("content");
-  const gearBtn = document.getElementById("gear-btn");
-  const modal = document.getElementById("modal");
-  const modalClose = document.getElementById("modal-close");
-  const jsonExample = document.getElementById("json-example");
-  const copyJsonBtn = document.getElementById("copy-json");
 
   const tnodes = document.querySelectorAll("[data-i]");
 
@@ -81,14 +66,12 @@
     lang = l;
     localStorage.setItem(STORAGE.LANG, l);
     langFlag.textContent = l === RU ? "🇷🇺" : "🇬🇧";
-    // update text nodes
+    // update texts
     tnodes.forEach(el => {
       const key = el.getAttribute("data-i");
       el.textContent = i18n[l][key];
     });
-    // placeholders
     searchInput.placeholder = i18n[l].searchPH;
-    // buttons on cards
     document.querySelectorAll(".open-link").forEach(a => a.textContent = i18n[l].openLink);
     document.querySelectorAll(".copy-link").forEach(b => b.textContent = i18n[l].copy);
   };
@@ -125,7 +108,6 @@
       await navigator.clipboard.writeText(txt);
       showToast(i18n[lang].copied);
     } catch {
-      // Fallback
       const ta = document.createElement("textarea");
       ta.value = txt; document.body.appendChild(ta); ta.select();
       document.execCommand("copy"); ta.remove();
@@ -196,42 +178,18 @@
     regroup(filtered); render();
   };
 
-  const buildJsonExample = () => {
-    const example = {
-      category: "Stock Tools",
-      icon: "https://einhell-bava-toolbox.pages.dev/icons/stock.png",
-      name: "Stock Viewer",
-      link: "https://einhell-stock.pages.dev/",
-      comment: "strictly confidential"
-    };
-    jsonExample.textContent = JSON.stringify(example, null, 2);
-  };
-
-  const setLangTexts = () => setLang(lang); // re-apply based on current lang
-
   // ---- Events ----
   langBtn.addEventListener("click", () => setLang(lang === RU ? EN : RU));
   document.addEventListener("keydown", (e) => {
-    // Ctrl/⌘+K -> focus search
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
       e.preventDefault();
       searchInput.focus();
     }
-    // Shift+A -> open modal
-    if (e.shiftKey && (e.key === "A" || e.key === "a")) {
-      e.preventDefault();
-      modal.showModal();
-    }
   });
-
-  gearBtn.addEventListener("click", () => modal.showModal());
-  modalClose.addEventListener("click", () => modal.close());
-  copyJsonBtn.addEventListener("click", () => copyToClipboard(jsonExample.textContent));
 
   lockBtn.addEventListener("click", () => {
     setAuthed(false);
     showToast(i18n[lang].logoutTitle);
-    // show lock
     lockScreen.removeAttribute("aria-hidden");
     lockScreen.style.display = "grid";
     pwdInput.focus();
@@ -266,25 +224,24 @@
 
   // ---- Init ----
   (async function init(){
-    // Language texts
-    setLangTexts();
-    buildJsonExample();
+    // Language
+    setLang(lang);
 
     // If already authed, skip lock
     if (isAuthed()) {
       lockScreen.setAttribute("aria-hidden","true");
       lockScreen.style.display = "none";
     } else {
-      // prefetch password file to reduce latency
-      try { passwordPlain = (await fetchText("password.txt")).trim(); }
-      catch {/* ignore */}
+      try { passwordPlain = (await fetchText("password.txt")).trim(); } catch {}
       lockScreen.style.display = "grid";
       pwdInput.focus();
     }
 
     // Load apps
     try {
-      apps = await fetchJSON("apps.json");
+      const res = await fetch("apps.json", { cache: "no-store" });
+      if (!res.ok) throw new Error("apps.json not found");
+      apps = await res.json();
     } catch (e) {
       console.error(e);
       apps = [];
