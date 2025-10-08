@@ -59,7 +59,9 @@
   let lang = (localStorage.getItem(STORAGE.LANG) || RU);
   let apps = [];
   let grouped = {};
-  let passwordPlain = null; // loaded from password.txt
+  let passwordPlain = null;          // loaded from password.txt
+  let categoryOrder = [];            // loaded from category-order.json
+  let categoryOrderIndex = Object.create(null);
 
   // ---- Helpers ----
   const setLang = (l) => {
@@ -86,6 +88,11 @@
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error(`Fetch JSON failed: ${url}`);
     return res.json();
+  };
+
+  const tryFetchJSON = async (url) => {
+    try { return await fetchJSON(url); }
+    catch { return null; }
   };
 
   const isAuthed = () => localStorage.getItem(STORAGE.AUTH) === "1";
@@ -117,13 +124,28 @@
 
   const normalize = (s) => (s || "").toLowerCase();
 
+  // Category comparator using optional priority list
+  const buildCategoryOrderIndex = () => {
+    categoryOrderIndex = Object.create(null);
+    categoryOrder.forEach((name, idx) => {
+      categoryOrderIndex[name] = idx; // lower index = higher priority
+    });
+  };
+
+  const compareCategories = (a, b) => {
+    const ia = categoryOrderIndex.hasOwnProperty(a) ? categoryOrderIndex[a] : Infinity;
+    const ib = categoryOrderIndex.hasOwnProperty(b) ? categoryOrderIndex[b] : Infinity;
+    if (ia !== ib) return ia - ib;            // ordered ones first
+    return a.localeCompare(b);                // fallback alphabetical
+  };
+
   // ---- UI builders ----
   const render = () => {
     content.innerHTML = "";
     const tmplSection = document.getElementById("card-template");
     const tmplCard = document.getElementById("app-card-template");
 
-    const categories = Object.keys(grouped).sort((a,b)=>a.localeCompare(b));
+    const categories = Object.keys(grouped).sort(compareCategories);
     categories.forEach(cat => {
       const sec = tmplSection.content.cloneNode(true);
       sec.querySelector(".category-title").textContent = cat;
@@ -224,10 +246,9 @@
 
   // ---- Init ----
   (async function init(){
-    // Language
     setLang(lang);
 
-    // If already authed, skip lock
+    // Gate
     if (isAuthed()) {
       lockScreen.setAttribute("aria-hidden","true");
       lockScreen.style.display = "none";
@@ -235,6 +256,13 @@
       try { passwordPlain = (await fetchText("password.txt")).trim(); } catch {}
       lockScreen.style.display = "grid";
       pwdInput.focus();
+    }
+
+    // Load category priority (optional)
+    const order = await tryFetchJSON("category-order.json");
+    if (Array.isArray(order)) {
+      categoryOrder = order;
+      buildCategoryOrderIndex();
     }
 
     // Load apps
