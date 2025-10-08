@@ -86,5 +86,13 @@
     "link": "https://sku-matcher-app.streamlit.app",
     "comment": "",
     "access": "public"
+  },
+  {
+    "category": "Рабочие файлы",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/telegram.png",
+    "name": "Характеристики продуктов",
+    "link": "https://t.me/einhell_centralasia/73",
+    "comment": "Картинки, лог./техн. информация",
+    "access": "public"
   }
 ]
