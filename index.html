@@ -40,33 +40,16 @@
     </div>
   </header>
 
-  <!-- Search & Hint -->
+  <!-- Search -->
   <section class="controls">
     <input id="search" type="search" placeholder="Поиск…" aria-label="Search" />
-    <div class="hint" data-i="hint">Нажми ⌘/Ctrl+K для поиска • Shift+A — добавить приложение (подсказка)</div>
+    <div class="hint" data-i="hint">Нажми ⌘/Ctrl+K для поиска</div>
   </section>
 
   <!-- Grid -->
   <main id="content" class="content" aria-live="polite"></main>
 
-  <!-- Hidden Add-App Gear -->
-  <button id="gear-btn" class="gear-btn" title="Add app (Shift+A)" aria-label="Add app">⚙️</button>
-
-  <!-- Modal -->
-  <dialog id="modal">
-    <div class="modal-header">
-      <h3 data-i="modalTitle">Как добавить новое приложение</h3>
-      <button id="modal-close" class="icon-btn" aria-label="Close">✖</button>
-    </div>
-    <div class="modal-body">
-      <p data-i="modalText1">Открой файл <code>apps.json</code> в репозитории GitHub и добавь новую строку в массив.</p>
-      <p data-i="modalText2">Пример объекта (скопируй и отредактируй):</p>
-      <pre id="json-example" class="code-block" aria-label="JSON Example"></pre>
-      <button id="copy-json" class="btn" data-i="copyJson">Скопировать пример</button>
-      <p class="muted" data-i="modalText3">После коммита Cloudflare Pages автоматически обновит сайт.</p>
-    </div>
-  </dialog>
-
+  <!-- Templates -->
   <template id="card-template">
     <section class="category">
       <h2 class="category-title"></h2>
