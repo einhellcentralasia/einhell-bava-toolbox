@@ -132,9 +132,11 @@
     });
   };
 
+  const hasIndex = (k) => Object.prototype.hasOwnProperty.call(categoryOrderIndex, k);
+
   const compareCategories = (a, b) => {
-    const ia = categoryOrderIndex.hasOwnProperty(a) ? categoryOrderIndex[a] : Infinity;
-    const ib = categoryOrderIndex.hasOwnProperty(b) ? categoryOrderIndex[b] : Infinity;
+    const ia = hasIndex(a) ? categoryOrderIndex[a] : Infinity;
+    const ib = hasIndex(b) ? categoryOrderIndex[b] : Infinity;
     if (ia !== ib) return ia - ib;            // ordered ones first
     return a.localeCompare(b);                // fallback alphabetical
   };
