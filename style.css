@@ -122,3 +122,52 @@ html, body {
 
 /* Accessibility focus */
 :focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+
+/* ===== Access badges ===== */
+.access-badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 18px;
+  border-radius: 50%;
+  padding: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.3s ease;
+}
+
+.access-public {
+  color: #34c759; /* green */
+}
+
+.access-internal {
+  color: #ff3b30; /* red */
+}
+
+/* Optional hover fade */
+.app-card:hover .access-badge {
+  opacity: 0.9;
+}
+
+/* ===== Legend ===== */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 16px;
+  font-size: 13px;
+  opacity: 0.8;
+  margin: 10px 20px 0 20px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-icon {
+  font-size: 16px;
+  line-height: 1;
+}
