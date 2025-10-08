@@ -1,3 +1,6 @@
+/* =========================
+   Einhell Bava Toolbox (compact, badges, instant RU/EN)
+   ========================= */
 (() => {
   "use strict";
 
@@ -32,6 +35,7 @@
     }
   };
 
+  // Elements
   const lockScreen = document.getElementById("lock-screen");
   const lockForm = document.getElementById("lock-form");
   const lockError = document.getElementById("lock-error");
@@ -43,6 +47,7 @@
   const content = document.getElementById("content");
   const tnodes = document.querySelectorAll("[data-i]");
 
+  // State
   let lang = localStorage.getItem(STORAGE.LANG) || RU;
   let apps = [];
   let grouped = {};
@@ -50,19 +55,28 @@
   let categoryOrder = [];
   let categoryOrderIndex = Object.create(null);
 
+  // Helpers
   const setLang = (l, rerender = true) => {
     lang = l;
     localStorage.setItem(STORAGE.LANG, l);
     langFlag.textContent = l === RU ? "🇷🇺" : "🇬🇧";
+    // update static strings
     tnodes.forEach(el => {
       const key = el.getAttribute("data-i");
       el.textContent = i18n[l][key];
     });
     searchInput.placeholder = i18n[l].searchPH;
-    document.querySelector('[data-lang="public"] span:last-child').textContent =
-      l === RU ? "Можно отправлять клиентам" : "OK to share with clients";
-    document.querySelector('[data-lang="internal"] span:last-child').textContent =
-      l === RU ? "Для внутреннего использования" : "Internal use only";
+    // legend text
+    const pub = document.querySelector('[data-lang="public"] span:last-child');
+    const intr = document.querySelector('[data-lang="internal"] span:last-child');
+    if (pub && intr) {
+      pub.textContent = l === RU ? "Можно отправлять клиентам" : "OK to share with clients";
+      intr.textContent = l === RU ? "Для внутреннего использования" : "Internal use only";
+    }
+    // buttons on cards
+    document.querySelectorAll(".open-link").forEach(a => a.textContent = i18n[l].openLink);
+    document.querySelectorAll(".copy-link").forEach(b => b.textContent = i18n[l].copy);
+    // badge titles need rerender
     if (rerender) render();
   };
 
@@ -94,26 +108,25 @@
       setTimeout(() => el.remove(), 200);
     }, 1400);
   };
+
   const copyToClipboard = async (txt) => {
     try {
       await navigator.clipboard.writeText(txt);
       showToast(i18n[lang].copied);
     } catch {
       const ta = document.createElement("textarea");
-      ta.value = txt;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand("copy");
-      ta.remove();
+      ta.value = txt; document.body.appendChild(ta); ta.select();
+      document.execCommand("copy"); ta.remove();
       showToast(i18n[lang].copied);
     }
   };
+
   const normalize = (s) => (s || "").toLowerCase();
+
+  // Category order support
   const buildCategoryOrderIndex = () => {
     categoryOrderIndex = Object.create(null);
-    categoryOrder.forEach((name, idx) => {
-      categoryOrderIndex[name] = idx;
-    });
+    categoryOrder.forEach((name, idx) => { categoryOrderIndex[name] = idx; });
   };
   const hasIndex = (k) => Object.prototype.hasOwnProperty.call(categoryOrderIndex, k);
   const compareCategories = (a, b) => {
@@ -123,12 +136,13 @@
     return a.localeCompare(b);
   };
 
+  // UI
   const render = () => {
     content.innerHTML = "";
     const tmplSection = document.getElementById("card-template");
     const tmplCard = document.getElementById("app-card-template");
-    const categories = Object.keys(grouped).sort(compareCategories);
 
+    const categories = Object.keys(grouped).sort(compareCategories);
     categories.forEach(cat => {
       const sec = tmplSection.content.cloneNode(true);
       sec.querySelector(".category-title").textContent = cat;
@@ -136,13 +150,14 @@
 
       grouped[cat].forEach(item => {
         const node = tmplCard.content.cloneNode(true);
-        const card = node.querySelector(".app-card");
+        const card = node.querySelector(".card");
         const icon = node.querySelector(".app-icon");
         const name = node.querySelector(".app-name");
         const cmt = node.querySelector(".app-comment");
         const openA = node.querySelector(".open-link");
         const copyB = node.querySelector(".copy-link");
 
+        // icon, text
         icon.src = item.icon;
         icon.alt = `${item.name} icon`;
         name.textContent = item.name;
@@ -151,19 +166,21 @@
           cmt.textContent = item.comment;
         }
 
+        // access badge (emoji, top-right)
         const badge = document.createElement("div");
         badge.classList.add("access-badge");
         if (item.access === "public") {
           badge.classList.add("access-public");
           badge.innerHTML = "✅";
-          badge.title = lang === "ru" ? "Можно отправлять клиентам" : "OK to share with clients";
+          badge.title = lang === RU ? "Можно отправлять клиентам" : "OK to share with clients";
         } else {
           badge.classList.add("access-internal");
           badge.innerHTML = "🚫";
-          badge.title = lang === "ru" ? "Для внутреннего использования" : "Internal use only";
+          badge.title = lang === RU ? "Для внутреннего использования" : "Internal use only";
         }
         card.appendChild(badge);
 
+        // buttons
         openA.href = item.link;
         openA.textContent = i18n[lang].open;
         copyB.textContent = i18n[lang].copy;
@@ -171,6 +188,7 @@
 
         grid.appendChild(node);
       });
+
       content.appendChild(sec);
     });
   };
@@ -184,6 +202,7 @@
     });
     grouped = map;
   };
+
   const applySearch = (q) => {
     if (!q) { regroup(apps); render(); return; }
     const n = normalize(q);
@@ -195,6 +214,7 @@
     regroup(filtered); render();
   };
 
+  // Events
   langBtn.addEventListener("click", () => setLang(lang === RU ? EN : RU, true));
   lockBtn.addEventListener("click", () => {
     setAuthed(false);
@@ -204,12 +224,15 @@
     pwdInput.focus();
   });
   searchInput.addEventListener("input", (e) => applySearch(e.target.value));
+
   lockForm.addEventListener("submit", async (e) => {
     e.preventDefault();
     lockError.hidden = true;
     const entered = pwdInput.value.trim();
     if (!passwordPlain) {
-      try { passwordPlain = (await fetchText("password.txt")).trim(); } catch {
+      try {
+        passwordPlain = (await fetchText("password.txt")).trim();
+      } catch {
         lockError.textContent = "Password file missing.";
         lockError.hidden = false;
         return;
@@ -226,21 +249,24 @@
     }
   });
 
-  (async function init() {
+  // Init
+  (async function init(){
     setLang(lang, false);
+
     if (isAuthed()) {
-      lockScreen.setAttribute("aria-hidden", "true");
+      lockScreen.setAttribute("aria-hidden","true");
       lockScreen.style.display = "none";
     } else {
       try { passwordPlain = (await fetchText("password.txt")).trim(); } catch {}
       lockScreen.style.display = "grid";
       pwdInput.focus();
     }
+
     const order = await tryFetchJSON("category-order.json");
     if (Array.isArray(order)) {
-      categoryOrder = order;
-      buildCategoryOrderIndex();
+      categoryOrder = order; buildCategoryOrderIndex();
     }
+
     try {
       const res = await fetch("apps.json", { cache: "no-store" });
       if (!res.ok) throw new Error("apps.json not found");
