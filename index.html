@@ -1,64 +1,41 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Einhell Bava Toolbox</title>
-  <link rel="preload" as="image" href="logo.png">
+  <link rel="icon" type="image/png" href="logo.png" />
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- App Lock Screen -->
-  <div id="lock-screen" class="lock-screen" aria-hidden="true">
-    <div class="lock-card">
-      <h1>🔒 <span data-i="lockTitle">Доступ</span></h1>
-      <p class="muted" data-i="lockInfo">Введите пароль, чтобы открыть приложение.</p>
-      <form id="lock-form">
-        <input id="password-input" type="password" placeholder="********" autocomplete="current-password" required />
-        <button type="submit" class="btn primary" data-i="unlock">Открыть</button>
-      </form>
-      <p id="lock-error" class="error" role="alert" aria-live="assertive" hidden></p>
+  <header class="header">
+    <div class="left">
+      <a href="https://einhell.kz/" target="_blank" class="logo-link">
+        <img src="logo.png" alt="Einhell Bava Logo" class="logo" />
+      </a>
     </div>
-  </div>
-
-  <!-- Top Bar -->
-  <header class="topbar">
-    <a class="brand" href="https://einhell.kz/" target="_blank" rel="noopener">
-      <img src="logo.png" alt="Einhell" class="logo">
-      <span class="brand-text">Einhell Bava Toolbox</span>
-    </a>
-
-    <div class="top-actions">
-      <!-- Language switch -->
-      <button id="lang-btn" class="icon-btn" title="Язык / Language" aria-label="Language">
-        <span id="lang-flag" aria-hidden="true">🇷🇺</span>
-      </button>
-      <!-- Logout / Lock -->
-      <button id="lock-btn" class="icon-btn" title="Lock / Logout" aria-label="Lock">
-        🔐
-      </button>
+    <div class="center">
+      <input id="search" type="search" placeholder="Поиск…" />
+    </div>
+    <div class="right">
+      <button id="lang-btn"><span id="lang-flag">🇷🇺</span></button>
+      <button id="lock-btn">🔒</button>
     </div>
   </header>
 
-  <!-- Search -->
-  <section class="controls">
-    <input id="search" type="search" placeholder="Поиск…" aria-label="Search" />
-    <div class="hint" data-i="hint">Нажми ⌘/Ctrl+K для поиска</div>
-  </section>
-
+  <!-- Legend -->
   <div class="legend" id="legend">
-  <div class="legend-item" data-lang="public">
-    <span class="legend-icon">✅</span>
-    <span>Можно отправлять клиентам</span>
+    <div class="legend-item" data-lang="public">
+      <span class="legend-icon">✅</span>
+      <span>Можно отправлять клиентам</span>
+    </div>
+    <div class="legend-item" data-lang="internal">
+      <span class="legend-icon">🚫</span>
+      <span>Для внутреннего использования</span>
+    </div>
   </div>
-  <div class="legend-item" data-lang="internal">
-    <span class="legend-icon">🚫</span>
-    <span>Для внутреннего использования</span>
-  </div>
-</div>
 
-  <!-- Grid -->
-  <main id="content" class="content" aria-live="polite"></main>
+  <main id="content"></main>
 
   <!-- Templates -->
   <template id="card-template">
@@ -69,20 +46,27 @@
   </template>
 
   <template id="app-card-template">
-    <article class="card">
-      <div class="icon-wrap">
-        <img class="app-icon" alt="" loading="lazy">
+    <div class="app-card">
+      <img class="app-icon" alt="" />
+      <div class="app-name"></div>
+      <div class="app-comment" hidden></div>
+      <div class="buttons">
+        <a class="open-link" target="_blank"></a>
+        <button class="copy-link"></button>
       </div>
-      <div class="card-body">
-        <h3 class="app-name"></h3>
-        <p class="app-comment" hidden></p>
-      </div>
-      <div class="card-actions">
-        <a class="btn primary open-link" target="_blank" rel="noopener"></a>
-        <button class="btn copy-link"></button>
-      </div>
-    </article>
+    </div>
   </template>
+
+  <!-- Lock screen -->
+  <div id="lock-screen">
+    <form id="lock-form">
+      <h2 data-i="lockTitle">Доступ</h2>
+      <p data-i="lockInfo">Введите пароль, чтобы открыть приложение.</p>
+      <input id="password-input" type="password" placeholder="Пароль" />
+      <button data-i="unlock">Открыть</button>
+      <p id="lock-error" hidden></p>
+    </form>
+  </div>
 
   <script src="script.js"></script>
 </body>
