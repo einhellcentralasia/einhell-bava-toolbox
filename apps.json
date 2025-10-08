@@ -1,1 +1,16 @@
-
+[
+  {
+    "category": "Stock Tools",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/stock.png",
+    "name": "Stock Viewer",
+    "link": "https://einhell-stock.pages.dev/",
+    "comment": "strictly confidential"
+  },
+  {
+    "category": "Stock Tools",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/public.png",
+    "name": "Stock Viewer (Public)",
+    "link": "https://einhell-stock-public.pages.dev/",
+    "comment": ""
+  }
+]
