@@ -1,1 +1,95 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Einhell Bava Toolbox</title>
+  <link rel="preload" as="image" href="logo.png">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- App Lock Screen -->
+  <div id="lock-screen" class="lock-screen" aria-hidden="true">
+    <div class="lock-card">
+      <h1>🔒 <span data-i="lockTitle">Доступ</span></h1>
+      <p class="muted" data-i="lockInfo">Введите пароль, чтобы открыть приложение.</p>
+      <form id="lock-form">
+        <input id="password-input" type="password" placeholder="********" autocomplete="current-password" required />
+        <button type="submit" class="btn primary" data-i="unlock">Открыть</button>
+      </form>
+      <p id="lock-error" class="error" role="alert" aria-live="assertive" hidden></p>
+    </div>
+  </div>
 
+  <!-- Top Bar -->
+  <header class="topbar">
+    <a class="brand" href="https://einhell.kz/" target="_blank" rel="noopener">
+      <img src="logo.png" alt="Einhell" class="logo">
+      <span class="brand-text">Einhell Bava Toolbox</span>
+    </a>
+
+    <div class="top-actions">
+      <!-- Language switch -->
+      <button id="lang-btn" class="icon-btn" title="Язык / Language" aria-label="Language">
+        <span id="lang-flag" aria-hidden="true">🇷🇺</span>
+      </button>
+      <!-- Logout / Lock -->
+      <button id="lock-btn" class="icon-btn" title="Lock / Logout" aria-label="Lock">
+        🔐
+      </button>
+    </div>
+  </header>
+
+  <!-- Search & Hint -->
+  <section class="controls">
+    <input id="search" type="search" placeholder="Поиск…" aria-label="Search" />
+    <div class="hint" data-i="hint">Нажми ⌘/Ctrl+K для поиска • Shift+A — добавить приложение (подсказка)</div>
+  </section>
+
+  <!-- Grid -->
+  <main id="content" class="content" aria-live="polite"></main>
+
+  <!-- Hidden Add-App Gear -->
+  <button id="gear-btn" class="gear-btn" title="Add app (Shift+A)" aria-label="Add app">⚙️</button>
+
+  <!-- Modal -->
+  <dialog id="modal">
+    <div class="modal-header">
+      <h3 data-i="modalTitle">Как добавить новое приложение</h3>
+      <button id="modal-close" class="icon-btn" aria-label="Close">✖</button>
+    </div>
+    <div class="modal-body">
+      <p data-i="modalText1">Открой файл <code>apps.json</code> в репозитории GitHub и добавь новую строку в массив.</p>
+      <p data-i="modalText2">Пример объекта (скопируй и отредактируй):</p>
+      <pre id="json-example" class="code-block" aria-label="JSON Example"></pre>
+      <button id="copy-json" class="btn" data-i="copyJson">Скопировать пример</button>
+      <p class="muted" data-i="modalText3">После коммита Cloudflare Pages автоматически обновит сайт.</p>
+    </div>
+  </dialog>
+
+  <template id="card-template">
+    <section class="category">
+      <h2 class="category-title"></h2>
+      <div class="grid"></div>
+    </section>
+  </template>
+
+  <template id="app-card-template">
+    <article class="card">
+      <div class="icon-wrap">
+        <img class="app-icon" alt="" loading="lazy">
+      </div>
+      <div class="card-body">
+        <h3 class="app-name"></h3>
+        <p class="app-comment" hidden></p>
+      </div>
+      <div class="card-actions">
+        <a class="btn primary open-link" target="_blank" rel="noopener"></a>
+        <button class="btn copy-link"></button>
+      </div>
+    </article>
+  </template>
+
+  <script src="script.js"></script>
+</body>
+</html>
