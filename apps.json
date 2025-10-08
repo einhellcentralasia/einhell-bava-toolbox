@@ -1,7 +1,7 @@
 [
   {
     "category": "Stock Tools",
-    "icon": "https://einhell-bava-toolbox.pages.dev/icons/stock.png",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/internal_stock.png",
     "name": "Stock Viewer",
     "link": "https://einhell-stock.pages.dev/",
     "comment": "strictly confidential"
