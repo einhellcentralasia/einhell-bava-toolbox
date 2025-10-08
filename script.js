@@ -142,44 +142,64 @@
   };
 
   // ---- UI builders ----
-  const render = () => {
-    content.innerHTML = "";
-    const tmplSection = document.getElementById("card-template");
-    const tmplCard = document.getElementById("app-card-template");
+const render = () => {
+  content.innerHTML = "";
+  const tmplSection = document.getElementById("card-template");
+  const tmplCard = document.getElementById("app-card-template");
 
-    const categories = Object.keys(grouped).sort(compareCategories);
-    categories.forEach(cat => {
-      const sec = tmplSection.content.cloneNode(true);
-      sec.querySelector(".category-title").textContent = cat;
+  const categories = Object.keys(grouped).sort(compareCategories);
+  categories.forEach(cat => {
+    const sec = tmplSection.content.cloneNode(true);
+    sec.querySelector(".category-title").textContent = cat;
 
-      const grid = sec.querySelector(".grid");
-      grouped[cat].forEach(item => {
-        const node = tmplCard.content.cloneNode(true);
-        const icon = node.querySelector(".app-icon");
-        const name = node.querySelector(".app-name");
-        const cmt = node.querySelector(".app-comment");
-        const openA = node.querySelector(".open-link");
-        const copyB = node.querySelector(".copy-link");
+    const grid = sec.querySelector(".grid");
+    grouped[cat].forEach(item => {
+      const node = tmplCard.content.cloneNode(true);
+      const icon = node.querySelector(".app-icon");
+      const name = node.querySelector(".app-name");
+      const cmt = node.querySelector(".app-comment");
+      const openA = node.querySelector(".open-link");
+      const copyB = node.querySelector(".copy-link");
 
-        icon.src = item.icon;
-        icon.alt = `${item.name} icon`;
-        name.textContent = item.name;
-        if (item.comment && item.comment.trim().length) {
-          cmt.hidden = false;
-          cmt.textContent = item.comment;
-        }
+      // --- icon, title, comment ---
+      icon.src = item.icon;
+      icon.alt = `${item.name} icon`;
+      name.textContent = item.name;
+      if (item.comment && item.comment.trim().length) {
+        cmt.hidden = false;
+        cmt.textContent = item.comment;
+      }
 
-        openA.href = item.link;
-        openA.textContent = i18n[lang].open;
-        copyB.textContent = i18n[lang].copy;
-        copyB.addEventListener("click", () => copyToClipboard(item.link));
+      // --- access badge ---
+      const badge = document.createElement("div");
+      badge.classList.add("access-badge");
+      if (item.access === "public") {
+        badge.classList.add("access-public");
+        badge.innerHTML = "✅";
+        badge.title = lang === "ru"
+          ? "Можно отправлять клиентам"
+          : "OK to share with clients";
+      } else {
+        badge.classList.add("access-internal");
+        badge.innerHTML = "🚫";
+        badge.title = lang === "ru"
+          ? "Для внутреннего использования"
+          : "Internal use only";
+      }
+      node.querySelector(".app-card").appendChild(badge);
 
-        grid.appendChild(node);
-      });
+      // --- buttons ---
+      openA.href = item.link;
+      openA.textContent = i18n[lang].open;
+      copyB.textContent = i18n[lang].copy;
+      copyB.addEventListener("click", () => copyToClipboard(item.link));
 
-      content.appendChild(sec);
+      grid.appendChild(node);
     });
-  };
+
+    content.appendChild(sec);
+  });
+};
 
   const regroup = (list) => {
     const map = {};
