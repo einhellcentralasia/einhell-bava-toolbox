@@ -12,5 +12,61 @@
     "name": "Остатки для внешнего использования",
     "link": "https://einhell-stock-public.pages.dev/",
     "comment": "✅ Можно отправлять клиентам"
-  }
+  },
+  {
+    "category": "Прайс лист",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/price_list.png",
+    "name": "Прайс_KZT с Остатками + Каталоги",
+    "link": "https://bavatools.sharepoint.com/:b:/s/External_folder/EdcJATLW7bNKokdvGHzBe20BuOc2_AyvXerNUnGx-SBn_A?e=0fiLCl",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Каталоги",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/catalogue.png",
+    "name": "Каталоги на русском",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/Ei_hngWBvfhBpZtXDS6xRv8BLZghpE9f4RfZMVHaEwgkHw?e=Ui17y5",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Каталоги",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/catalogue.png",
+    "name": "Все каталоги (рус/англ/нем)",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/Eus1XKQylftLqfJMVO5t6zUB2TD5Yqa1kRfYQ-bgWuqbyg?e=0QoF0w",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Style Guide",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/logo_print.png",
+    "name": "Логотипы для печати",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/EsvimX4bZVRNpQLVKK6j6iQBl9l25fMvr93ERsSmTly3rA?e=qsia3M",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Style Guide",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/style_guide.png",
+    "name": "Style Guide",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/EkBX1DGweuVGoPAwExoIf68BKbX-Otc9COnYz73Pfx6MdQ?e=OB7fPt",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Style Guide",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/display_blueprint.png",
+    "name": "Стенды / Чертежи",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/EjBTtbWEy-dBtwJ62ep7sMABtNHmPgnaowJGqQZUWESABQ?e=BUam84",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Видео",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/video.png",
+    "name": "Видео (обучение, маркетинг)",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/EnZ5-rTP8f1KoCIDjYFFrvUBP4swKyjrna58ag46Bja9wA?e=2VqbOU",
+    "comment": "✅ Можно отправлять клиентам"
+  },
+  {
+    "category": "Рабочие файлы",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/certificate.png",
+    "name": "Сертификаты / Декларации",
+    "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/ErPVAXQpaRdAsJ44eCUWJNIBMHp_8zDqSJHP0qGXCiKkkw?e=taFLbl",
+    "comment": "✅ Можно отправлять клиентам"
+  },
 ]
