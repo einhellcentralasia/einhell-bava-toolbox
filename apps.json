@@ -1,16 +1,16 @@
 [
   {
-    "category": "Stock Tools",
+    "category": "Остатки",
     "icon": "https://einhell-bava-toolbox.pages.dev/icons/internal_stock.png",
-    "name": "Stock Viewer",
+    "name": "Остатки для внутр. использования",
     "link": "https://einhell-stock.pages.dev/",
-    "comment": "strictly confidential"
+    "comment": "‼️ Только для внутреннего использования ‼️"
   },
   {
-    "category": "Stock Tools",
+    "category": "Остатки",
     "icon": "https://einhell-bava-toolbox.pages.dev/icons/public_stock.png",
-    "name": "Stock Viewer (Public)",
+    "name": "Остатки для внешнего использования",
     "link": "https://einhell-stock-public.pages.dev/",
-    "comment": ""
+    "comment": "✅ Можно отправлять клиентам"
   }
 ]
