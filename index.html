@@ -8,8 +8,8 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <!-- App Lock Screen -->
-  <div id="lock-screen" class="lock-screen" aria-hidden="true">
+  <!-- 🔒 Lock Screen (shown first, app hidden) -->
+  <div id="lock-screen" class="lock-screen" aria-hidden="false">
     <div class="lock-card">
       <h1>🔒 <span data-i="lockTitle">Доступ</span></h1>
       <p class="muted" data-i="lockInfo">Введите пароль, чтобы открыть приложение.</p>
@@ -21,67 +21,68 @@
     </div>
   </div>
 
-  <!-- Top Bar (original style) -->
-  <header class="topbar">
-    <a class="brand" href="https://einhell.kz/" target="_blank" rel="noopener">
-      <img src="logo.png" alt="Einhell" class="logo">
-      <span class="brand-text">Einhell Bava Toolbox</span>
-    </a>
+  <!-- 🌐 App (hidden until password is correct) -->
+  <div id="app" hidden>
+    <!-- Top Bar -->
+    <header class="topbar">
+      <a class="brand" href="https://einhell.kz/" target="_blank" rel="noopener">
+        <img src="logo.png" alt="Einhell" class="logo">
+        <span class="brand-text">Einhell Bava Toolbox</span>
+      </a>
 
-    <div class="top-actions">
-      <!-- Language switch -->
-      <button id="lang-btn" class="icon-btn" title="Язык / Language" aria-label="Language">
-        <span id="lang-flag" aria-hidden="true">🇷🇺</span>
-      </button>
-      <!-- Logout / Lock -->
-      <button id="lock-btn" class="icon-btn" title="Lock / Logout" aria-label="Lock">
-        🔐
-      </button>
-    </div>
-  </header>
-
-  <!-- Controls (search + legend on the LEFT) -->
-  <section class="controls">
-    <input id="search" type="search" placeholder="Поиск…" aria-label="Search" />
-    <div class="legend" id="legend">
-      <div class="legend-item" data-lang="public">
-        <span class="legend-icon">✅</span>
-        <span>Можно отправлять клиентам</span>
+      <div class="top-actions">
+        <button id="lang-btn" class="icon-btn" title="Язык / Language" aria-label="Language">
+          <span id="lang-flag" aria-hidden="true">🇷🇺</span>
+        </button>
+        <button id="lock-btn" class="icon-btn" title="Lock / Logout" aria-label="Lock">
+          🔐
+        </button>
       </div>
-      <div class="legend-item" data-lang="internal">
-        <span class="legend-icon">🚫</span>
-        <span>Для внутреннего использования</span>
+    </header>
+
+    <!-- Controls (search + legend on the LEFT) -->
+    <section class="controls">
+      <input id="search" type="search" placeholder="Поиск…" aria-label="Search" />
+      <div class="legend" id="legend">
+        <div class="legend-item" data-lang="public">
+          <span class="legend-icon">✅</span>
+          <span>Можно отправлять клиентам</span>
+        </div>
+        <div class="legend-item" data-lang="internal">
+          <span class="legend-icon">🚫</span>
+          <span>Для внутреннего использования</span>
+        </div>
       </div>
-    </div>
-  </section>
-
-  <!-- Grid -->
-  <main id="content" class="content" aria-live="polite"></main>
-
-  <!-- Templates -->
-  <template id="card-template">
-    <section class="category">
-      <h2 class="category-title"></h2>
-      <div class="grid"></div>
     </section>
-  </template>
 
-  <template id="app-card-template">
-    <article class="card">
-      <div class="icon-wrap">
-        <img class="app-icon" alt="" loading="lazy">
-      </div>
-      <div class="card-body">
-        <h3 class="app-name"></h3>
-        <p class="app-comment" hidden></p>
-      </div>
-      <div class="card-actions">
-        <a class="btn primary open-link" target="_blank" rel="noopener"></a>
-        <button class="btn copy-link"></button>
-      </div>
-      <!-- access badge injected by JS -->
-    </article>
-  </template>
+    <!-- Grid -->
+    <main id="content" class="content" aria-live="polite"></main>
+
+    <!-- Templates -->
+    <template id="card-template">
+      <section class="category">
+        <h2 class="category-title"></h2>
+        <div class="grid"></div>
+      </section>
+    </template>
+
+    <template id="app-card-template">
+      <article class="card">
+        <div class="icon-wrap">
+          <img class="app-icon" alt="" loading="lazy">
+        </div>
+        <div class="card-body">
+          <h3 class="app-name"></h3>
+          <p class="app-comment" hidden></p>
+        </div>
+        <div class="card-actions">
+          <a class="btn primary open-link" target="_blank" rel="noopener"></a>
+          <button class="btn copy-link"></button>
+        </div>
+        <!-- access badge injected by JS -->
+      </article>
+    </template>
+  </div>
 
   <script src="script.js"></script>
 </body>
