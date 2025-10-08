@@ -78,5 +78,13 @@
     "link": "https://bavatools.sharepoint.com/:f:/s/External_folder/ErPVAXQpaRdAsJ44eCUWJNIBMHp_8zDqSJHP0qGXCiKkkw?e=taFLbl",
     "comment": "",
     "access": "public"
+  },
+  {
+    "category": "Приложения",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/sku_match.png",
+    "name": "Подбор артикулов",
+    "link": "https://sku-matcher-app.streamlit.app",
+    "comment": "",
+    "access": "public"
   }
 ]
