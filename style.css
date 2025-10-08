@@ -13,12 +13,19 @@
 }
 
 *{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0;
-  background:linear-gradient(180deg,var(--bg) 0%, var(--bg-2) 100%);
-  color:var(--text);
-  font:15px/1.45 -apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",Segoe UI,Roboto,Arial,Helvetica,sans-serif;
+/* ✅ Final unified background fix */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #1b1e23;   /* uniform dark grey */
+  color: var(--text);
+  font: 15px/1.45 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+}
+
+/* Remove any secondary background from nested sections */
+#content, .app-container, .grid {
+  background: none;
 }
 
 /* Topbar */
