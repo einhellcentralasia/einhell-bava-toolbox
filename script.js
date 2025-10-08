@@ -50,7 +50,7 @@
   let categoryOrder = [];
   let categoryOrderIndex = Object.create(null);
 
-  const setLang = (l) => {
+  const setLang = (l, rerender = true) => {
     lang = l;
     localStorage.setItem(STORAGE.LANG, l);
     langFlag.textContent = l === RU ? "🇷🇺" : "🇬🇧";
@@ -63,6 +63,7 @@
       l === RU ? "Можно отправлять клиентам" : "OK to share with clients";
     document.querySelector('[data-lang="internal"] span:last-child').textContent =
       l === RU ? "Для внутреннего использования" : "Internal use only";
+    if (rerender) render();
   };
 
   const fetchText = async (url) => {
@@ -70,13 +71,11 @@
     if (!res.ok) throw new Error(`Fetch failed: ${url}`);
     return res.text();
   };
-
   const fetchJSON = async (url) => {
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) throw new Error(`Fetch JSON failed: ${url}`);
     return res.json();
   };
-
   const tryFetchJSON = async (url) => {
     try { return await fetchJSON(url); } catch { return null; }
   };
@@ -95,7 +94,6 @@
       setTimeout(() => el.remove(), 200);
     }, 1400);
   };
-
   const copyToClipboard = async (txt) => {
     try {
       await navigator.clipboard.writeText(txt);
@@ -110,9 +108,7 @@
       showToast(i18n[lang].copied);
     }
   };
-
   const normalize = (s) => (s || "").toLowerCase();
-
   const buildCategoryOrderIndex = () => {
     categoryOrderIndex = Object.create(null);
     categoryOrder.forEach((name, idx) => {
@@ -131,8 +127,8 @@
     content.innerHTML = "";
     const tmplSection = document.getElementById("card-template");
     const tmplCard = document.getElementById("app-card-template");
-
     const categories = Object.keys(grouped).sort(compareCategories);
+
     categories.forEach(cat => {
       const sec = tmplSection.content.cloneNode(true);
       sec.querySelector(".category-title").textContent = cat;
@@ -188,7 +184,6 @@
     });
     grouped = map;
   };
-
   const applySearch = (q) => {
     if (!q) { regroup(apps); render(); return; }
     const n = normalize(q);
@@ -200,7 +195,7 @@
     regroup(filtered); render();
   };
 
-  langBtn.addEventListener("click", () => setLang(lang === RU ? EN : RU));
+  langBtn.addEventListener("click", () => setLang(lang === RU ? EN : RU, true));
   lockBtn.addEventListener("click", () => {
     setAuthed(false);
     showToast(i18n[lang].logoutTitle);
@@ -232,7 +227,7 @@
   });
 
   (async function init() {
-    setLang(lang);
+    setLang(lang, false);
     if (isAuthed()) {
       lockScreen.setAttribute("aria-hidden", "true");
       lockScreen.style.display = "none";
