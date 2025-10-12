@@ -94,5 +94,13 @@
     "link": "https://t.me/einhell_centralasia/73",
     "comment": "Картинки, лог./техн. информация",
     "access": "public"
+  },
+  {
+    "category": "Приложения",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/pdf_split.png",
+    "name": "Обработка мануалов",
+    "link": "https://pdf-lab.onrender.com",
+    "comment": "",
+    "access": "public"
   }
 ]
