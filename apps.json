@@ -16,6 +16,14 @@
     "access": "public"
   },
   {
+    "category": "Остатки",
+    "icon": "https://einhell-bava-toolbox.pages.dev/icons/service_gear.png",
+    "name": "Бронь для сервиса",
+    "link": "https://einhell-service-stock.pages.dev/",
+    "comment": "Веб страница с остатками",
+    "access": "internal"
+  },
+  {
     "category": "Прайс лист",
     "icon": "https://einhell-bava-toolbox.pages.dev/icons/price_list.png",
     "name": "Прайс_KZT с Остатками + Каталоги",
